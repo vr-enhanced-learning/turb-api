@@ -1,14 +1,21 @@
 import express from "express"
-import fetch from "node-fetch"
+import dotenv from "dotenv"
+import Database from "./database.js"
 import { cors } from "./middleware.js"
 
-const SERVERLESS_CAPTIONS_ENDPOINT = "https://youtube-questions.vercel.app/captions?youtubeVideoId="
+dotenv.config()
+
+export const SERVERLESS_CAPTIONS_ENDPOINT = "https://youtube-questions.vercel.app"
+export const SUMMARIZER_MODULE_INFERENCE_ENDPOINT = "https://currentlyexhausted-flan-t5-summarizer.hf.space/run/predict"
+export const QUESTION_GENERATION_MODULE_INFERENCE_ENDPOINT = "https://currentlyexhausted-question-generator.hf.space/run/predict"
 
 const app = express()
 const PORT = process.env.PORT || 3003
 
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`)
+new Database().start().then(() => {
+	app.listen(PORT, () => {
+		console.log(`Server running on port ${PORT}`)
+	})
 })
 
 app.use(express.json())
