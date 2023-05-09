@@ -21,16 +21,13 @@ new Database().start().then(() => {
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
+// API Routes
+import question from "./api/question.js"
+import summary from "./api/summary.js"
+
+app.use("/api/question", cors, question)
+app.use("/api/summary", cors, summary)
+
 app.get("/", cors, (_, res) => {
-	res.status(200).send("API is online")
-})
-
-app.get("/:videoId", cors, async (_, res) => {
-    let videoId = req.params.videoId
-
-    if(videoId == "") return res.status(400).send("Send videoId")
-
-    let captions = await fetch(`${SERVERLESS_CAPTIONS_ENDPOINT}videoId`)
-
-	res.status(200).send("API is online")
+	res.status(200).send("TURB P2 and P3 Module API is online")
 })
