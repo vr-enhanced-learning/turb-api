@@ -45,6 +45,21 @@ router.get("/:videoId", cors, async (_, res) => {
 	}
 })
 
+router.delete("/:videoId", cors, async (req, res) => {
+	try {
+		let videoId = req.params.videoId
+
+		if (videoId == "") return res.status(400).send("Send videoId")
+
+		await Question.deleteOne({ videoId: videoId })
+
+		res.status(200).send("Deleted")
+	} catch (err) {
+		console.log(err)
+		res.status(500).send(err)
+	}
+})
+
 function getSentences(text, num_of_sentences = 5) {
 	text = String(text) // Convert to string if necessary
 	const length = text.length
