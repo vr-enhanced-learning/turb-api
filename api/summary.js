@@ -42,6 +42,21 @@ router.get("/:videoId", cors, async (_, res) => {
 	}
 })
 
+router.delete("/:videoId", cors, async (req, res) => {
+	try {
+		let videoId = req.params.videoId
+
+		if (videoId == "") return res.status(400).send("Send videoId")
+
+		await Summary.deleteOne({ videoId: videoId })
+
+		res.status(200).send("Deleted")
+	} catch (err) {
+		console.log(err)
+		res.status(500).send(err)
+	}
+})
+
 async function getSummary(captions) {
 	let request = await fetch(SUMMARIZER_MODULE_INFERENCE_ENDPOINT, {
 		method: "POST",
