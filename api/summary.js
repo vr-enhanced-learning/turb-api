@@ -4,6 +4,7 @@ import { cors } from "../middleware.js"
 import {
 	SUMMARIZER_MODULE_INFERENCE_ENDPOINT,
 } from "../app.js"
+import { captionString } from "./utilities.js"
 
 const app = express()
 const router = express.Router()
@@ -24,9 +25,7 @@ router.get("/:videoId", cors, async (req, res) => {
 		let data = await Summary.findOne({ videoId: videoId })
 		if (data) return res.status(200).send(data.content)
 
-		let captions = await fetch(
-			`${SERVERLESS_CAPTIONS_ENDPOINT}/captions?youtubeVideoId=${videoId}&beautify=false`
-		)
+		let captions = await captionString(videoId)
 
 		let summary = await getSummary(captions)
 
