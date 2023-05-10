@@ -1,7 +1,7 @@
 import express from "express"
 import Summary from "../schemas/SummarySchema.js"
+import { cors } from "../middleware.js"
 import {
-	SERVERLESS_CAPTIONS_ENDPOINT,
 	SUMMARIZER_MODULE_INFERENCE_ENDPOINT,
 } from "../app.js"
 

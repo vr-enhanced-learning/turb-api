@@ -1,5 +1,6 @@
 import express from "express"
 import fetch from "node-fetch"
+import { cors } from "../middleware.js"
 import Question from "../schemas/QuestionSchema.js"
 import {
 	SERVERLESS_CAPTIONS_ENDPOINT,
