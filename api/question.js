@@ -3,9 +3,9 @@ import fetch from "node-fetch"
 import { cors } from "../middleware.js"
 import Question from "../schemas/QuestionSchema.js"
 import {
-	SERVERLESS_CAPTIONS_ENDPOINT,
 	QUESTION_GENERATION_MODULE_INFERENCE_ENDPOINT,
 } from "../app.js"
+import { captionString } from "./utilities.js"
 
 const app = express()
 const router = express.Router()
@@ -26,9 +26,7 @@ router.get("/:videoId", cors, async (req, res) => {
 		let data = await Question.findOne({ videoId: videoId })
 		if (data) return res.status(200).send(data.content)
 
-		let captions = await fetch(
-			`${SERVERLESS_CAPTIONS_ENDPOINT}/captions?youtubeVideoId=${videoId}&beautify=false`
-		)
+		let captions = await captionString(videoId)
 
 		let array = getSentences(captions)
 		let questions = await getResponses(array)
