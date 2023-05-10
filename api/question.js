@@ -45,6 +45,7 @@ router.get("/:videoId", cors, async (_, res) => {
 })
 
 function getSentences(text, num_of_sentences = 5) {
+	text = String(text) // Convert to string if necessary
 	const length = text.length
 	const length_of_each_part = Math.floor(length / num_of_sentences)
 	const new_array = []
