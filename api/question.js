@@ -17,7 +17,7 @@ router.get("/", (_, res) => {
 	res.status(200).send("QUESTIONS API ONLINE")
 })
 
-router.get("/:videoId", cors, async (_, res) => {
+router.get("/:videoId", cors, async (req, res) => {
 	try {
 		let videoId = req.params.videoId
 
